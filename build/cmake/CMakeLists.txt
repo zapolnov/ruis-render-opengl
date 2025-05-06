@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.30)
 
 include(GNUInstallDirs)
 
@@ -6,45 +6,48 @@ set(name ruis-render-opengl)
 
 project(${name})
 
-# ============================
-# = find dependency packages =
-
-find_package(utki CONFIG REQUIRED)
-find_package(papki CONFIG REQUIRED)
+if(NOT TARGET ruis::ruis)
 find_package(ruis CONFIG REQUIRED)
-find_package(ZLIB REQUIRED)
-find_package(Freetype REQUIRED)
+endif()
+
 find_package(GLEW REQUIRED)
 
-# ============================
+set(srcdir "${CMAKE_CURRENT_SOURCE_DIR}/../../src/ruis")
+file(GLOB_RECURSE src RELATIVE "${srcdir}" CONFIGURE_DEPENDS "${srcdir}/*.cpp" "${srcdir}/*.hpp")
 
-file(GLOB_RECURSE srcs "../../src/*.cpp")
+set(srcs)
+foreach(file ${src})
+    get_filename_component(path "${file}" DIRECTORY)
+    string(REPLACE "/" "\\" path "Source Files/${path}")
+    source_group("${path}" FILES "${srcdir}/${file}")
+    list(APPEND srcs "${srcdir}/${file}")
+endforeach()
 
 add_library(
     ${name}
     STATIC
-    ${srcs}
+        ${srcs}
 )
 
-target_compile_features(${name} PUBLIC cxx_std_17)
+target_compile_features(${name} PUBLIC cxx_std_20)
 set_target_properties(${name} PROPERTIES CXX_STANDARD_REQUIRED ON)
 set_target_properties(${name} PROPERTIES CXX_EXTENSIONS OFF)
 
 target_include_directories(
     ${name}
-    INTERFACE
-        $<BUILD_INTERFACE:>
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../src>
         $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(
     ${name}
     PUBLIC
-        utki::utki
-        papki::papki
         ruis::ruis
         GLEW::GLEW
 )
+
+if(NOT RUIS_RENDER_OPENGL_DISABLE_INSTALL)
 
 # install library header files preserving directory hierarchy
 install(
@@ -74,3 +77,5 @@ install(
     NAMESPACE
         ${name}::
 )
+
+endif()
