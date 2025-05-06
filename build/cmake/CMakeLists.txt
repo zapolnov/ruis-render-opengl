@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.30)
 
+set(name ruis-render-opengl)
+project(${name})
+
 if(NOT IGAGIS_CMAKE_COMMON_INCLUDED)
     set(dir "${CMAKE_CURRENT_SOURCE_DIR}/../../tool-configs/cmake")
     if(NOT EXISTS "${dir}/common.cmake")
@@ -13,8 +16,6 @@ if(NOT IGAGIS_CMAKE_COMMON_INCLUDED)
     endif()
     include("${dir}/common.cmake")
 endif()
-
-set(name ruis-render-opengl)
 
 set(srcs)
 add_source_directory(srcs
