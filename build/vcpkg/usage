@@ -1,0 +1,9 @@
+ruis-render-opengl provides CMake targets:
+
+# TODO: EDIT library dependency packages list
+find_package(utki CONFIG REQUIRED)
+find_package(ruis REQUIRED)
+
+find_package(ruis-render-opengl CONFIG REQUIRED)
+
+target_link_libraries(main PRIVATE ruis-render-opengl::ruis-render-opengl)

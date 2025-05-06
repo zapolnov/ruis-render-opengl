@@ -40,6 +40,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::render::opengl;
 
+// TODO: remove commented code
 // namespace {
 // unsigned get_max_texture_size()
 // {

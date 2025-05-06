@@ -1,3 +1,9 @@
+libruis-render-opengl (0.1.86) unstable; urgency=medium
+
+  * vcpkg
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 29 Apr 2025 17:47:37 +0300
+
 libruis-render-opengl (0.1.85) unstable; urgency=medium
 
   * update
